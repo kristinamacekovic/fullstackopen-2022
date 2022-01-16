@@ -1,0 +1,8 @@
+title New note in a SPA
+
+note left of browser: *app already rendered*
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa {content: "[note content]", date: "2022-01-16T17:25:00.876Z"}
+server->browser: 201 {"message":"note created"}
+
+
+

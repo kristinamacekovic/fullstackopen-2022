@@ -1,0 +1,13 @@
+title Opening a SPA
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server->browser: 200 HTML code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser: 200 main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server->browser: 200 spa.js
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server->browser: 200 data.json
+
+
+
