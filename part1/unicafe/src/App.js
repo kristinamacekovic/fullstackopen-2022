@@ -42,7 +42,8 @@ const App = () => {
       <Button text="positive" onClick={() => handlePositive()}></Button>
       <Button text="neutral" onClick={() => handleNeutral()}></Button>
       <Button text="bad" onClick={() => handleBad()}></Button>
-      <Statistics good={good} neutral={neutral} bad={bad} />
+      {sumAll(good, neutral, bad) !== 0 ?
+          <Statistics good={good} neutral={neutral} bad={bad} /> : <h1>No feedback given</h1> }
     </div>
   )
 }
