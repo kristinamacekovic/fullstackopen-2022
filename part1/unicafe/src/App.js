@@ -14,7 +14,10 @@ const Button = props => {
 const StatisticLine = props => {
   const {text, value} = props;
   return (
-    <p>{text}: {value}</p>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
     )
   }
   
@@ -23,12 +26,16 @@ const Statistics = props => {
   return (
     <div>
       <h1>Statistics</h1>
-      <StatisticLine text="Good" value={good}/>
-      <StatisticLine text="Neutral" value={neutral}/>
-      <StatisticLine text="Bad" value={bad}/>
-      <StatisticLine text="All" value={sumAll(good, neutral, bad)}/>
-      <StatisticLine text="Average" value={(good-bad)/sumAll(good, neutral, bad)}/>
-      <StatisticLine text="Percent good" value={(good/sumAll(good, neutral, bad))*100}/>
+      <table>
+        <tbody>
+          <StatisticLine text="Good" value={good}/>
+          <StatisticLine text="Neutral" value={neutral}/>
+          <StatisticLine text="Bad" value={bad}/>
+          <StatisticLine text="All" value={sumAll(good, neutral, bad)}/>
+          <StatisticLine text="Average" value={(good-bad)/sumAll(good, neutral, bad)}/>
+          <StatisticLine text="Percent good" value={(good/sumAll(good, neutral, bad))*100}/>
+        </tbody>
+      </table>
     </div>
   )
 }
@@ -59,7 +66,7 @@ const App = () => {
   return (
     <div>
       <h1>Give Feedback</h1>
-      <Button text="positive" onClick={() => handleClick("positive")}></Button>
+      <Button text="good" onClick={() => handleClick("positive")}></Button>
       <Button text="neutral" onClick={() => handleClick("neutral")}></Button>
       <Button text="bad" onClick={() => handleClick("bad")}></Button>
       {sumAll(good, neutral, bad) !== 0 ?
