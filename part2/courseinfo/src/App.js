@@ -17,7 +17,7 @@ const Total = ({course}) => {
   let {id, name, parts} = course;
   let initial = 0;
   return (
-    <p>Number of exercises {parts.reduce((p,c)=>p+c.exercises,initial)}</p>
+    <p><strong>Number of exercises {parts.reduce((p,c)=>p+c.exercises,initial)}</strong></p>
   )
 }
 
