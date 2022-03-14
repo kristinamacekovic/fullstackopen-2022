@@ -16,6 +16,7 @@ const Content = ({course}) => {
 const Total = ({course}) => {
   let {id, name, parts} = course;
   let initial = 0;
+  //sum was already implemented using reduce, adding the comment just to commit as a separate change
   return (
     <p><strong>Number of exercises {parts.reduce((p,c)=>p+c.exercises,initial)}</strong></p>
   )
