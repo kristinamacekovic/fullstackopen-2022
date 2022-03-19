@@ -23,7 +23,7 @@ const App = () => {
      <h1>Search</h1>
      <Search value={searchTerm} onChange={handleSearch}/>
      <h1>Results</h1>
-     <Results countries={countries} searchTerm={searchTerm}/>
+     <Results countries={countries} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
    </div>
   )
 }

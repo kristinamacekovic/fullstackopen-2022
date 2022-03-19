@@ -1,6 +1,7 @@
 import Country from './Country'
+import SearchResult from './SearchResult'
 
-const Results = ({countries, searchTerm}) => {
+const Results = ({countries, searchTerm, setSearchTerm}) => {
     const filteredCountries = countries.filter(country => country.name.official.toLowerCase().includes(searchTerm.toLowerCase()))
     if (filteredCountries.length === 1) {
         // return info on 1 specific country
@@ -13,7 +14,7 @@ const Results = ({countries, searchTerm}) => {
         //list out the countries
         return (
             <div>
-                {filteredCountries.map(country => <p key={country.ccn3}>{country.name.official}</p>)}
+                {filteredCountries.map(country => <SearchResult key={country.cca3} country={country} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>)}
             </div>
         )
     }
