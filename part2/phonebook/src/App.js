@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import phonebook from './services/phonebook'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,10 +12,11 @@ const App = () => {
 
   // set persons to initial state once when the component is rendered the first time
   useEffect(() => {
-    axios.get('http://localhost:3001/persons')
-          .then(response => {
-            setPersons(response.data);
-          })
+    phonebook.getEntries()
+      .then(response => {
+        setPersons(response);
+      })
+      .catch(error => console.log(error))
   }, []);
 
   const checkForDuplicateNames = () => {
@@ -33,12 +34,13 @@ const App = () => {
         number: newNumber
       };
 
-      axios.post('http://localhost:3001/persons', newNameObject)
+      phonebook.createEntry(newNameObject)
           .then(response => {
-            setPersons(persons.concat(response.data));
+            setPersons(persons.concat(response));
             setNewName('');
             setNewNumber('');
           })
+          .catch(error => console.log(error))
 
     }
   }
