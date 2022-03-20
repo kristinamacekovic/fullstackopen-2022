@@ -30,7 +30,15 @@ const App = () => {
     event.preventDefault();
     // does the entry already exist?
     if (checkForDuplicateNames()) {
-      alert(`${newName} is already added in the phonebook`);
+      if (window.confirm(`${newName} is already added in the phonebook, would you like to update the entry?`)) {
+        // get the current entry
+        const currentEntry = persons.filter(person => person.name === newName)
+        phonebook.updateEntry(currentEntry)
+          .then(response => {
+            console.log(response);
+          })
+      
+      }
     }
     // if not, add it to the phonebook
     else {
