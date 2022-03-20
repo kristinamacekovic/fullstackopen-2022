@@ -19,15 +19,20 @@ const App = () => {
       .catch(error => console.log(error))
   }, []);
 
+  // check if the entry is already in the phonebook
   const checkForDuplicateNames = () => {
     return (persons.filter(person => person.name === newName).length > 0);
   }
 
+  // add a new entry to the phonebook
   const addName = event => {
+    //don't send the form
     event.preventDefault();
+    // does the entry already exist?
     if (checkForDuplicateNames()) {
       alert(`${newName} is already added in the phonebook`);
     }
+    // if not, add it to the phonebook
     else {
       const newNameObject = {
         name: newName,
@@ -42,6 +47,16 @@ const App = () => {
           })
           .catch(error => console.log(error))
 
+    }
+  }
+
+  const handleDelete = id => {
+    if (window.confirm("Do you really want to delete the entry?")) {
+      phonebook.deleteEntry(id)
+        .then(response => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+        .catch(error => console.log(error))
     }
   }
 
@@ -64,7 +79,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm addName={addName} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
       <h2>Numbers</h2>
-      <Persons persons={persons} searchField={searchField}/>
+      <Persons persons={persons} searchField={searchField} handleDelete={handleDelete}/>
     </div>
   )
 }

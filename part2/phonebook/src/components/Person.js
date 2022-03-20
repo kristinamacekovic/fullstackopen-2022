@@ -1,6 +1,9 @@
-const Person = props => {
+const Person = ({id, name, number, handleDelete}) => {
     return (
-        <p key={props.name}>{props.name}: {props.number}</p>
+        <div>
+            <p key={id}>{name}: {number}</p>
+            <button onClick={() => handleDelete(id)}>Delete</button>
+        </div>
     )
 }
 
