@@ -57,7 +57,7 @@ const App = () => {
           })
           .catch(error => {
             setAppState('error')
-            setMessage(error)
+            setMessage("something went wrong, please refresh and try again")
             setTimeout(() => {
               setMessage('')
               setAppState('success')
@@ -86,7 +86,7 @@ const App = () => {
           })
           .catch(error => {
             setAppState('error')
-            setMessage(error)
+            setMessage("something went wrong, please refresh and try again")
             setTimeout(() => {
               setMessage('')
               setAppState('success')
@@ -112,7 +112,7 @@ const App = () => {
         })
         .catch(error => {
           setAppState('error')
-            setMessage(error)
+            setMessage("something went wrong, please refresh and try again")
             setTimeout(() => {
               setMessage('')
               setAppState('success')
