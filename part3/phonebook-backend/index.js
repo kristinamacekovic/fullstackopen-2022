@@ -1,3 +1,4 @@
+const { response } = require('express')
 const express = require('express')
 const app = express()
 
@@ -38,9 +39,15 @@ app.get('/api/persons/:id', (request, response) => {
   const foundEntry = phonebook.filter(entry => entry.id === Number(request.params.id))
   // if it's found, display it, otherwise return a 404 not found message
   if (foundEntry) {
-    return response.json(foundEntry)
+    response.json(foundEntry)
+  } else {
+    response.status(404).end()
   }
-  return response.status(404).end()
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+  phonebook = phonebook.filter(entry => entry.id !== Number(request.params.id))
+  response.status(204).end()
 })
 
 const PORT = 3001
