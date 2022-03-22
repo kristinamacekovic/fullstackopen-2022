@@ -25,6 +25,8 @@ let phonebook = [
     }
 ]
 
+app.use(express.json())
+
 app.get('/api/persons', (request, response) => {
     response.json(phonebook)
 })
@@ -48,6 +50,17 @@ app.get('/api/persons/:id', (request, response) => {
 app.delete('/api/persons/:id', (request, response) => {
   phonebook = phonebook.filter(entry => entry.id !== Number(request.params.id))
   response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => {
+  // create a new object
+  let newEntry = {...request.body, 
+    id: Math.round(1000000*Math.random())
+  }
+  // add object to app data
+  phonebook = phonebook.concat(newEntry)
+  // send response
+  response.json(newEntry)
 })
 
 const PORT = 3001
