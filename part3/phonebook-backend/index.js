@@ -33,6 +33,16 @@ app.get('/info', (request, response) => {
     response.send(responseBody)
 })
 
+app.get('/api/persons/:id', (request, response) => {
+ // find the specific entry
+  const foundEntry = phonebook.filter(entry => entry.id === Number(request.params.id))
+  // if it's found, display it, otherwise return a 404 not found message
+  if (foundEntry) {
+    return response.json(foundEntry)
+  }
+  return response.status(404).end()
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}...`);
