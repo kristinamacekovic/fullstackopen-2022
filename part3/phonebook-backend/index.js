@@ -53,8 +53,27 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
+  // check validity of payload
+  let valid = request.body.name && request.body.number
+  
+  if (valid) {
+    let duplicates = phonebook.filter(entry => entry.name.toLowerCase() === request.body.name.toLowerCase()).length > 0 
+    if (duplicates) {
+      return response.status(400).json({
+        error: "There's already an entry with the same name"
+      })
+    }
+  }
+  
+  if (!valid) {
+    return response.status(400).json({
+      error: 'Name or number are missing'
+    })
+  }
+
   // create a new object
-  let newEntry = {...request.body, 
+  let newEntry = {
+    ...request.body, 
     id: Math.round(1000000*Math.random())
   }
   // add object to app data
