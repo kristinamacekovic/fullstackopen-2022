@@ -2,6 +2,7 @@ const { response } = require('express')
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+morgan.token('body', (request, response) => JSON.stringify(request.body))
 
 let phonebook = [
     { 
@@ -27,7 +28,7 @@ let phonebook = [
 ]
 
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 app.get('/api/persons', (request, response) => {
     response.json(phonebook)
