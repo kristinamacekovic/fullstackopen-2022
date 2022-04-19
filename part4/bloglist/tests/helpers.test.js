@@ -95,3 +95,10 @@ describe('validate mostLikes function', () => {
         expect(result).toEqual(blogs[2])
     })
 })
+
+describe('validate mostBlogs function', () => {
+    test('Robert C. Martin should have most blogs', () => {
+        const result = listHelper.mostBlogs(blogs)
+        expect(result).toEqual({ 'Robert C. Martin': 3 })
+    })
+})
