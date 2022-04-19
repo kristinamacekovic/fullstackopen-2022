@@ -51,8 +51,10 @@ const blogs = [
     }  
 ]
 
-const mapped = _.countBy(blogs, blog => blog.author)
-const mapped_values = _.toPairs(mapped)
-const max_value = _.maxBy(mapped_values, _.last)
-const arr = new Array(max_value)
-console.log(_.fromPairs(arr))
+const mapped = _.groupBy(blogs, blog => blog.author)
+console.log(mapped)
+const mapped_values = _.map(mapped, (obj, key) => ({
+    'author': key,
+    'likes': _.sumBy(obj, 'likes')
+}))
+console.log(_.maxBy(mapped_values, blog => blog.likes))
