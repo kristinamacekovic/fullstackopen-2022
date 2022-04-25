@@ -5,7 +5,7 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Refactoring project structure",
+    "title": "testing the backend",
     "author": "University of Helsinki",
     "url": "https://fullstackopen.com/en/part4/structure_of_backend_application_introduction_to_testing#project-structure",
     "likes": 1
