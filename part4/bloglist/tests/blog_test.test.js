@@ -85,5 +85,24 @@ test('bloglist: id property is named correctly', async () => {
     }
 })
 
+test('bloglist: check creating a new post increases the list by one and the contents are the same', async () => {
+    const newBlog = {
+        title: 'NutriU',
+        author: 'Infinum',
+        url: 'https://infinum.com/news/infinum-and-philips-award-winning-collaboration-on-nutriu/',
+        likes: 7
+    }
+    const oldState = await api.get('/api/blogs')
+    // eslint-disable-next-line no-unused-vars
+    const _ = await api.post('/api/blogs').send(newBlog)
+    const newState = await api.get('/api/blogs')
+    expect(newState.body).toHaveLength(oldState.body.length+1)
+    const latestBlog = newState.body[newState.body.length-1]
+    expect(latestBlog).toHaveProperty('title', 'NutriU')
+    expect(latestBlog).toHaveProperty('author', 'Infinum')
+    expect(latestBlog).toHaveProperty('url', 'https://infinum.com/news/infinum-and-philips-award-winning-collaboration-on-nutriu/')
+    expect(latestBlog).toHaveProperty('likes', 7)
+})
+
 // close down the connection to DB
 afterAll(() => mongoose.connection.close())
