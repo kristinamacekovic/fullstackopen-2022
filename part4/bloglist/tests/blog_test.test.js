@@ -64,17 +64,26 @@ beforeEach(async () => {
 
 const api = supertest(app)
 
-test('blog list is returned as JSON', async () => {
+test('bloglist: blog list is returned as JSON', async () => {
     await api
         .get('/api/blogs')
         .expect(200)
         .expect('Content-Type', /application\/json/)
 })
 
-test('there should be 1 blog in test db', async () => {
+test('bloglist: there should be 1 blog in test db', async () => {
     const response = await api.get('/api/blogs')
-    console.log(response.body)
+    // console.log(response.body)
     expect(response.body).toHaveLength(6)
 })
 
+test('bloglist: id property is named correctly', async () => {
+    const response = await api.get('/api/blogs')
+    if (response.body.length > 0) {
+        expect(response.body[0]).toHaveProperty('id')
+        expect(response.body[0]).not.toHaveProperty('_id')
+    }
+})
+
+// close down the connection to DB
 afterAll(() => mongoose.connection.close())
