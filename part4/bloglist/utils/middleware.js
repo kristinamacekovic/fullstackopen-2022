@@ -19,6 +19,11 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).send({ error: 'malformatted id' })
     } 
 
+    if (error.name === 'ValidationError') {
+        console.log('entered into validation error logger')
+        return response.status(400).send({ error: 'Validation Failed' })
+    }
+
     next(error)
 }
 

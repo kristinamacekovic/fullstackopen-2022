@@ -114,5 +114,18 @@ test('bloglist: a post request without specified likes deafults to 0 likes', asy
     expect(addedBlog.body).toHaveProperty('likes', 0)
 })
 
+test('bloglist: if title or url are missing from request body then 400 bad request is returned', async () => {
+    const newBlogWithoutTitle = {
+        author: 'Infinum',
+        url: 'https://infinum.com/blog/how-to-design-app-for-ipad/'
+    }
+    const newBlogWithoutUrl = {
+        title: 'Some fake title',
+        author: 'Infinum'
+    }
+    await api.post('/api/blogs').send(newBlogWithoutTitle).expect(400)
+    await api.post('/api/blogs').send(newBlogWithoutUrl).expect(400)
+})
+
 // close down the connection to DB
 afterAll(() => mongoose.connection.close())
