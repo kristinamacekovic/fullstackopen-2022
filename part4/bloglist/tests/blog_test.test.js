@@ -104,5 +104,15 @@ test('bloglist: check creating a new post increases the list by one and the cont
     expect(latestBlog).toHaveProperty('likes', 7)
 })
 
+test('bloglist: a post request without specified likes deafults to 0 likes', async () => {
+    const newBlog = {
+        title: 'How to design an app for iPad in 2021',
+        author: 'Infinum',
+        url: 'https://infinum.com/blog/how-to-design-app-for-ipad/'
+    }
+    const addedBlog = await api.post('/api/blogs').send(newBlog)
+    expect(addedBlog.body).toHaveProperty('likes', 0)
+})
+
 // close down the connection to DB
 afterAll(() => mongoose.connection.close())
