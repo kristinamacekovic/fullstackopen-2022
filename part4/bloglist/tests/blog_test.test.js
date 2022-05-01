@@ -1,4 +1,4 @@
-const { first } = require('lodash')
+const { first, update } = require('lodash')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
@@ -118,12 +118,30 @@ test('bloglist: if title or url are missing from request body then 400 bad reque
 
 test('delete post', async () => {
     const blogs = await api.get('/api/blogs')
-    const firstblog = blogs.body[0]
-    const firstblogID = firstblog.id
-    await api.delete(`/api/blogs/${firstblogID}`).expect(204)
+    const firstBlog = blogs.body[0]
+    const firstBlogID = firstBlog.id
+    await api.delete(`/api/blogs/${firstBlogID}`).expect(204)
     // can't find the blog anymore
-    const result = await Blog.find({'_id': firstblogID})
+    const result = await Blog.find({'_id': firstBlogID})
     expect(result).toHaveLength(0)
+})
+
+test('update post', async () => {
+    const blogs = await api.get('/api/blogs')
+    const firstBlog = blogs.body[0]
+    const firstBlogID = firstBlog.id
+    await api.put(`/api/blogs/${firstBlogID}`).send({
+        title: 'New title',
+        author: 'New author',
+        url: 'https://reactpatterns.com/',
+        likes: 10
+    })
+    // can't find the blog anymore
+    const result = await Blog.find({'id': firstBlogID})
+    //console.log(result[0])
+    expect(result[0].likes).toEqual(10)
+    expect(result[0].title).toEqual('New title')
+    expect(result[0].author).toEqual('New author')
 })
 
 // close down the connection to DB

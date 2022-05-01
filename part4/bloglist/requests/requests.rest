@@ -8,3 +8,13 @@ Content-Type: application/json
     "author": "Infinum",
     "url": "https://infinum.com/blog/how-to-design-app-for-ipad/"
 }
+###
+PUT http://localhost:3003/api/blogs/626e3694957607bf3a0fb1cb
+Content-Type: application/json
+
+{
+    "author": "Infinum",
+    "url": "https://infinum.com/blog/how-to-design-app-for-ipad/",
+    "title": "sth",
+    "likes": 10
+}
