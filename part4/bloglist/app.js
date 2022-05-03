@@ -8,6 +8,7 @@ const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 const cors = require('cors')
 const postsRouter = require('./controllers/posts')
+const usersRouter = require('./controllers/users')
 const mongoose = require('mongoose')
 
 logger.info('connectin to', config.mongoUrl)
@@ -21,6 +22,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 app.use('/api/blogs', postsRouter)
+app.use('/api/users', usersRouter)
 
 app.use(middleware.unknownEndpoint)
 // this has to be the last loaded middleware.
