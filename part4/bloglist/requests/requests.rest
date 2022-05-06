@@ -5,7 +5,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "author": "Infinum",
+    "title": "I didnt specify a user",
+    "author": "Kika",
     "url": "https://infinum.com/blog/how-to-design-app-for-ipad/"
 }
 ###
@@ -24,9 +25,9 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-    "username": "ditto",
-    "name": "kikachu",
-    "password": "fdfidafaincisi"
+    "username": "Fowler",
+    "name": "E",
+    "password": "123dada"
 }
 
 ###

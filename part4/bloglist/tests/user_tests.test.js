@@ -7,12 +7,14 @@ const initialUsers = [
     {
         username: "pika",
         password: "IlikeTo3letricutestuff",
-        name: "pikachu"
+        name: "pikachu",
+        blogs: ["626e587453afa0310b9a3079", "626e587553afa0310b9a307b"]
     },
     {
         username: "Bulba",
         password: "IlikeToWhi5stuff",
-        name: "Bulbasaur"
+        name: "Bulbasaur",
+        blogs: ["626e587553afa0310b9a307d"]
     }
 ]
 
