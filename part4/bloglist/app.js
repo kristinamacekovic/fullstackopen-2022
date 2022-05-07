@@ -9,6 +9,7 @@ const middleware = require("./utils/middleware")
 const cors = require("cors")
 const postsRouter = require("./controllers/posts")
 const usersRouter = require("./controllers/users")
+const loginRouter = require("./controllers/login")
 const mongoose = require("mongoose")
 
 logger.info("connectin to", config.mongoUrl)
@@ -23,6 +24,7 @@ app.use(middleware.requestLogger)
 
 app.use("/api/blogs", postsRouter)
 app.use("/api/users", usersRouter)
+app.use("/api/login", loginRouter)
 
 app.use(middleware.unknownEndpoint)
 // this has to be the last loaded middleware.
