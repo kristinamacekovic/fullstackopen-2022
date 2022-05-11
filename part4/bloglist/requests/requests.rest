@@ -45,10 +45,10 @@ Content-Type: application/json
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjIxMTAzNn0.G7pSU2XpdyQPj85jGqMVK-v_ad7kA5YAhNZ7anuYh5Q
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjI0NTYyM30.aTrtCtgFvroplhReY9--HA6uDQ_26lyNmPBsAWlpJ_g
 
 {
-    "title": "Helouuu",
+    "title": "Here again",
     "author": "tester",
     "url": "https://infinum.com/blog/how-to-design-app-for-ipad/"
 }
