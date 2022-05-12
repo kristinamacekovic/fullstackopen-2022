@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 const postsRouter = require("express").Router()
 const Blog = require("../models/Blog")
@@ -40,7 +41,17 @@ postsRouter.post("/", async (request, response, next) => {
 
 postsRouter.delete("/:id", async (request, response, next) => {
     try {
-        await Blog.findByIdAndDelete(request.params.id)
+        const decodedToken = jwt.verify(request.token, process.env.SECRET)
+        if (!decodedToken.id) {
+            return response.status(401).json({ error: "token missing or invalid" })
+        }
+        const user = await User.findById(decodedToken.id)
+        //console.log(user.id.toString())
+        const blog = await Blog.findById(request.params.id)
+        //console.log(blog.user._id.toString())
+        if (blog.user._id.toString() === user.id.toString()) {
+            await Blog.findByIdAndDelete(request.params.id)
+        }
         response.status(204).end()
     } catch(error) {
         next(error)
