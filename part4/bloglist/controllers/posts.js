@@ -16,12 +16,7 @@ postsRouter.get("/", async (request, response, next) => {
 
 postsRouter.post("/", async (request, response, next) => {
     const body = request.body
-    // eslint-disable-next-line no-undef
-    const decodedToken = jwt.verify(request.token, process.env.SECRET)
-    if (!decodedToken.id) {
-        return response.status(401).json({ error: "token missing or invalid" })
-    }
-    const user = await User.findById(decodedToken.id)
+    const user = request.user
     const blog = new Blog({
         title: body.title,
         author: body.author,
@@ -30,10 +25,14 @@ postsRouter.post("/", async (request, response, next) => {
         user: user._id
     })
     try {
-        const savedBlog = await blog.save()
-        user.blogs = user.blogs.concat(savedBlog._id)
-        await user.save()
-        response.status(201).json(savedBlog)
+        if (blog.user._id.toString() === user._id.toString()) {
+            const savedBlog = await blog.save()
+            user.blogs = user.blogs.concat(savedBlog._id)
+            await user.save()
+            response.status(201).json(savedBlog)
+        } else {
+            response.status(401).json({ error: "Unauthorized" })
+        }
     } catch(error) {
         next(error)
     }
@@ -41,18 +40,14 @@ postsRouter.post("/", async (request, response, next) => {
 
 postsRouter.delete("/:id", async (request, response, next) => {
     try {
-        const decodedToken = jwt.verify(request.token, process.env.SECRET)
-        if (!decodedToken.id) {
-            return response.status(401).json({ error: "token missing or invalid" })
-        }
-        const user = await User.findById(decodedToken.id)
-        //console.log(user.id.toString())
+        const user = request.user
         const blog = await Blog.findById(request.params.id)
-        //console.log(blog.user._id.toString())
-        if (blog.user._id.toString() === user.id.toString()) {
+        if (blog.user._id.toString() === user._id.toString()) {
             await Blog.findByIdAndDelete(request.params.id)
+            response.status(204).end()
+        } else {
+            response.status(401).json({ error: "Unauthorized" })
         }
-        response.status(204).end()
     } catch(error) {
         next(error)
     }

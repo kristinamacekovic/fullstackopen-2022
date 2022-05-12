@@ -1,5 +1,6 @@
 ###
 GET http://localhost:3003/api/blogs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjMzMTQ4OX0.FIu_DU3RQXgxS3GYrOFGsAPmUT5ZdKctMeDGBIGSZYg
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
@@ -45,14 +46,14 @@ Content-Type: application/json
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjI0NTYyM30.aTrtCtgFvroplhReY9--HA6uDQ_26lyNmPBsAWlpJ_g
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjI0NTYyM30.aTrtCtgFvroplhReY9--
 
 {
-    "title": "Here again",
+    "title": "I'll delete this",
     "author": "tester",
     "url": "https://infinum.com/blog/how-to-design-app-for-ipad/"
 }
 ###
-DELETE http://localhost:3003/api/blogs/627abd903acb7fd33f1fe272
+DELETE http://localhost:3003/api/blogs/6274c35aaf2b92bb5356c2ee
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjMyOTk1OH0.l3uauhTcvOXaht0za3SP9cHy8YYR2H6B8Db9yZpx9w4
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjMzMTQ4OX0.FIu_DU3RQXgxS3GYrOFGsAPmUT5ZdKctMeDGBIGSZYg
