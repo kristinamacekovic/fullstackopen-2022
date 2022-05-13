@@ -53,26 +53,61 @@ beforeEach(async () => {
 const api = supertest(app)
 
 test("bloglist: blog list is returned as JSON", async () => {
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "iliketoteststuff"
+        })
+    const token = getToken.body.token
     await api
         .get("/api/blogs")
+        .auth(token, { type: "bearer" })
         .expect(200)
         .expect("Content-Type", /application\/json/)
 })
 
 test("bloglist: there should be 1 blog in test db", async () => {
-    const response = await api.get("/api/blogs")
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "iliketoteststuff"
+        })
+    const token = getToken.body.token
+    const response = await api.get("/api/blogs").auth(token, { type: "bearer" })
     // console.log(response.body)
     expect(response.body).toHaveLength(6)
 })
 
 test("bloglist: id property is named correctly", async () => {
-    const response = await api.get("/api/blogs")
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "iliketoteststuff"
+        })
+    const token = getToken.body.token
+    const response = await api.get("/api/blogs").auth(token, { type: "bearer" })
     if (response.body.length > 0) {
         expect(response.body[0]).toHaveProperty("id")
         expect(response.body[0]).not.toHaveProperty("_id")
     }
 })
 
+/*test("bloglist: adding blog fails if not logged in", async () => {
+    const newBlog = {
+        title: "NutriU",
+        author: "Infinum",
+        url: "https://infinum.com/news/infinum-and-philips-award-winning-collaboration-on-nutriu/",
+        likes: 7
+    }
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "wrongpassword"
+        })
+    const token = getToken.body.token
+    await api.post("/api/blogs").auth(token, { type: "bearer" }).expect(500).send(newBlog)
+})
+*/
 test("bloglist: check creating a new post increases the list by one and the contents are the same", async () => {
     const newBlog = {
         title: "NutriU",
@@ -80,10 +115,16 @@ test("bloglist: check creating a new post increases the list by one and the cont
         url: "https://infinum.com/news/infinum-and-philips-award-winning-collaboration-on-nutriu/",
         likes: 7
     }
-    const oldState = await api.get("/api/blogs")
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "iliketoteststuff"
+        })
+    const token = getToken.body.token
+    const oldState = await api.get("/api/blogs").auth(token, { type: "bearer" })
     // eslint-disable-next-line no-unused-vars
-    const _ = await api.post("/api/blogs").send(newBlog)
-    const newState = await api.get("/api/blogs")
+    const _ = await api.post("/api/blogs").auth(token, { type: "bearer" }).send(newBlog)
+    const newState = await api.get("/api/blogs").auth(token, { type: "bearer" })
     expect(newState.body).toHaveLength(oldState.body.length+1)
     const latestBlog = newState.body[newState.body.length-1]
     expect(latestBlog).toHaveProperty("title", "NutriU")
@@ -98,7 +139,13 @@ test("bloglist: a post request without specified likes deafults to 0 likes", asy
         author: "Infinum",
         url: "https://infinum.com/blog/how-to-design-app-for-ipad/"
     }
-    const addedBlog = await api.post("/api/blogs").send(newBlog)
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "iliketoteststuff"
+        })
+    const token = getToken.body.token
+    const addedBlog = await api.post("/api/blogs").auth(token, { type: "bearer" }).send(newBlog)
     expect(addedBlog.body).toHaveProperty("likes", 0)
 })
 
@@ -111,25 +158,43 @@ test("bloglist: if title or url are missing from request body then 400 bad reque
         title: "Some fake title",
         author: "Infinum"
     }
-    await api.post("/api/blogs").send(newBlogWithoutTitle).expect(400)
-    await api.post("/api/blogs").send(newBlogWithoutUrl).expect(400)
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "iliketoteststuff"
+        })
+    const token = getToken.body.token
+    await api.post("/api/blogs").auth(token, { type: "bearer" }).send(newBlogWithoutTitle).expect(400)
+    await api.post("/api/blogs").auth(token, { type: "bearer" }).send(newBlogWithoutUrl).expect(400)
 })
 
-test("delete post", async () => {
-    const blogs = await api.get("/api/blogs")
+test("bloglist: delete post", async () => {
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "iliketoteststuff"
+        })
+    const token = getToken.body.token
+    const blogs = await api.get("/api/blogs").auth(token, { type: "bearer" })
     const firstBlog = blogs.body[0]
     const firstBlogID = firstBlog.id
-    await api.delete(`/api/blogs/${firstBlogID}`).expect(204)
+    await api.delete(`/api/blogs/${firstBlogID}`).auth(token, { type: "bearer" }).expect(204)
     // can't find the blog anymore
     const result = await Blog.find({"_id": firstBlogID})
     expect(result).toHaveLength(0)
 })
 
-test("update post", async () => {
-    const blogs = await api.get("/api/blogs")
+test("bloglist: update post", async () => {
+    const getToken = await api
+        .post("/api/login").send({
+            "username": "tester",
+            "password": "iliketoteststuff"
+        })
+    const token = getToken.body.token
+    const blogs = await api.get("/api/blogs").auth(token, { type: "bearer" })
     const firstBlog = blogs.body[0]
     const firstBlogID = firstBlog.id
-    await api.put(`/api/blogs/${firstBlogID}`).send({
+    await api.put(`/api/blogs/${firstBlogID}`).auth(token, { type: "bearer" }).send({
         title: "New title",
         author: "New author",
         url: "https://reactpatterns.com/",

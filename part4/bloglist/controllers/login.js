@@ -4,7 +4,6 @@ const loginRouter = require("express").Router()
 const User = require("../models/User")
 
 loginRouter.post("/", async (request, response) => {
-
     // get username and password
     const { username, password } = request.body
     // console.log(password)
@@ -18,7 +17,7 @@ loginRouter.post("/", async (request, response) => {
         : await bcrypt.compare(password, user.hashedPassword)
 
     // handle situation if username or password are incorrect
-    if (!(user && passwordIsCorrect)) {
+    if (!user || !passwordIsCorrect) {
         return response.status(401).json({
             error: "invalid username or password"
         })
@@ -33,6 +32,9 @@ loginRouter.post("/", async (request, response) => {
     // eslint-disable-next-line no-undef
     const token = jwt.sign(infoForToken, process.env.SECRET)
 
+    if (!token) {
+        return response.status(401).json({ error: "Unauthorized" })
+    }  
     response
         .status(200)
         .send({ token, username: user.username, name: user.name })

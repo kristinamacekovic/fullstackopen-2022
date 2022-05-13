@@ -1,9 +1,10 @@
 ###
 GET http://localhost:3003/api/blogs
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjMzMTQ4OX0.FIu_DU3RQXgxS3GYrOFGsAPmUT5ZdKctMeDGBIGSZYg
+//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjMzMTQ4OX0.FIu_DU3RQXgxS3GYrOFGsAPmUT5ZdKctMeDGBIGSZYg
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjQ2ODQwNn0.Pi9QrKOqvVsCCGUr8BTCPXkUJOUdo8VDjhpC0z4qeE
 
 {
     "title": "I didnt specify a user",
