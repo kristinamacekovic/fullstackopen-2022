@@ -9,19 +9,16 @@ const App = () => {
   const [password, setPassword] = useState([])
   const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
-  }, [])
-
-  const handleLogin = event => {
+  const handleLogin = async event => {
     event.preventDefault()
     try {
-      const user = loginService.login({username, password})
+      const user = await loginService.login({username, password})
       setUser(user)
       setUsername("")
       setPassword("")
+      blogService.getAll(user.token).then(blogs => 
+        setBlogs( blogs )
+      )
     } catch (exception) {
       console.log(exception)
     }
@@ -49,15 +46,22 @@ const App = () => {
     </form>
   )
 
-  return (
+  const renderLoginState = () => (
     <div>
-      <h1>blogs</h1>
-
-      { user === null && loginForm() }
-
+      <h2>{`${user.username} is logged in`}</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+    </div>
+  )
+
+  return (
+    <div>
+      <h1>Blogs</h1>
+      { user === null ? 
+        loginForm() :
+        renderLoginState()
+      }
     </div>
   )
 }
