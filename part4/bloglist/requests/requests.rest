@@ -1,6 +1,6 @@
 ###
 GET http://localhost:3003/api/blogs
-//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjMzMTQ4OX0.FIu_DU3RQXgxS3GYrOFGsAPmUT5ZdKctMeDGBIGSZYg
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjYyNDYzMH0.0zjzq6RkZLDQJvmSswNx_4WaacmqW3ZQp7pGQ74aIY4
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
@@ -55,6 +55,6 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0Y
     "url": "https://infinum.com/blog/how-to-design-app-for-ipad/"
 }
 ###
-DELETE http://localhost:3003/api/blogs/6274c35aaf2b92bb5356c2ee
+DELETE http://localhost:3003/api/blogs/625a8bfae8deca730e59eb4e
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjMzMTQ4OX0.FIu_DU3RQXgxS3GYrOFGsAPmUT5ZdKctMeDGBIGSZYg
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzYxOGM0YTM5NWUxMzkxMjkzODRhMiIsImlhdCI6MTY1MjYyNDYzMH0.0zjzq6RkZLDQJvmSswNx_4WaacmqW3ZQp7pGQ74aIY4

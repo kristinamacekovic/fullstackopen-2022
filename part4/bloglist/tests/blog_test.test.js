@@ -92,7 +92,7 @@ test("bloglist: id property is named correctly", async () => {
     }
 })
 
-/*test("bloglist: adding blog fails if not logged in", async () => {
+test("bloglist: adding blog fails if not logged in", async () => {
     const newBlog = {
         title: "NutriU",
         author: "Infinum",
@@ -105,9 +105,9 @@ test("bloglist: id property is named correctly", async () => {
             "password": "wrongpassword"
         })
     const token = getToken.body.token
-    await api.post("/api/blogs").auth(token, { type: "bearer" }).expect(500).send(newBlog)
+    await api.post("/api/blogs").auth(token, { type: "bearer" }).expect(401).send(newBlog)
 })
-*/
+
 test("bloglist: check creating a new post increases the list by one and the contents are the same", async () => {
     const newBlog = {
         title: "NutriU",
@@ -175,8 +175,15 @@ test("bloglist: delete post", async () => {
             "password": "iliketoteststuff"
         })
     const token = getToken.body.token
+    const newBlog = {
+        title: "NutriU",
+        author: "Infinum",
+        url: "https://infinum.com/news/infinum-and-philips-award-winning-collaboration-on-nutriu/",
+        likes: 7
+    }
+    await api.post("/api/blogs").auth(token, { type: "bearer" }).expect(201).send(newBlog)
     const blogs = await api.get("/api/blogs").auth(token, { type: "bearer" })
-    const firstBlog = blogs.body[0]
+    const firstBlog = blogs.body[blogs.body.length-1]
     const firstBlogID = firstBlog.id
     await api.delete(`/api/blogs/${firstBlogID}`).auth(token, { type: "bearer" }).expect(204)
     // can't find the blog anymore

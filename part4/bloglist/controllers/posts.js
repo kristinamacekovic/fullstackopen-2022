@@ -7,19 +7,19 @@ const User = require("../models/User")
 const jwt = require("jsonwebtoken")
 
 postsRouter.get("/", async (request, response, next) => {
-    console.log(request.token)
     try {
-        const getBlogs = await Blog.find({}).populate("user")
-        response.status(200).json(getBlogs)
+        if (request.token) {
+            const getBlogs = await Blog.find({}).populate("user")
+            response.status(200).json(getBlogs)
+        } else {
+            response.status(401).json("Unauthorized")
+        }
     } catch(error) {
         next(error)
     }
 })
 
 postsRouter.post("/", async (request, response, next) => {
-    if (!request.token) {
-        return response.status(401).json({error:"Unauthorized"})
-    }
     const token = request.token
     const decodedToken = jwt.verify(token, process.env.SECRET)
     if (!token || !decodedToken.id) {
@@ -41,7 +41,6 @@ postsRouter.post("/", async (request, response, next) => {
             await user.save()
             response.status(201).json(savedBlog)
         }   
-        //response.status(401).json({ error: "Unauthorized" })
     } catch(error) {
         next(error)
     }
