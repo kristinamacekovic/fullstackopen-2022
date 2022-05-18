@@ -9,8 +9,24 @@ const getAll = async (token) => {
   return response.data
 }
 
+const createNew = async (token, title, author, url) => {
+  const response = await axios.post(baseUrl, {
+      title,
+      author,
+      url
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }
+  )
+  return response.data
+}
+
 const exportObject = {
-  getAll
+  getAll,
+  createNew
 }
 
 export default exportObject
