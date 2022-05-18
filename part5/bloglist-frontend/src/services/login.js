@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import axios from "axios"
 const baseURL = "/api/login"
 
@@ -6,4 +7,8 @@ const login = async (credentials) => {
     return response.data
 }
 
-export default { login }
+const exportObject = {
+    login
+}
+
+export default exportObject

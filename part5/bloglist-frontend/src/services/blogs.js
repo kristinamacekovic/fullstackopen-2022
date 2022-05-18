@@ -9,4 +9,8 @@ const getAll = async (token) => {
   return response.data
 }
 
-export default { getAll }
+const exportObject = {
+  getAll
+}
+
+export default exportObject
