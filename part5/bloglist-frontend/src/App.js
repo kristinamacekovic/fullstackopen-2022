@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import CreateForm from './components/CreateForm'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -7,9 +9,6 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState([])
   const [password, setPassword] = useState([])
-  const [title, setTitle] = useState([])
-  const [author, setAuthor] = useState([])
-  const [url, setURL] = useState([])
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState(null)
   
@@ -56,17 +55,13 @@ const App = () => {
     }
   }
 
-  const handleCreate = async event => {
-    event.preventDefault()
+  const handleCreate = async ({title, author, url}) => {
     try {
       await blogService.createNew(user.token, title, author, url).then(response => {
         blogService.getAll(user.token).then(blogs => setBlogs(blogs))
       })
       setNotification(`Created ${title} by ${author}`)
       setTimeout(() => { setNotification("") }, 5000)
-      setTitle("")
-      setAuthor("")
-      setURL("")
     } catch(exception) {
       setNotification(exception.message)
       setTimeout(() => { setNotification("") }, 5000)
@@ -95,21 +90,6 @@ const App = () => {
     </form>
   )
 
-  const createForm = () => (
-    <form onSubmit={handleCreate}>
-      <div> Title: 
-        <input type="text" value={title} name="title" onChange={({ target }) => setTitle(target.value)}/>
-      </div>
-      <div>Author: 
-        <input type="text" value={author} name="author" onChange={({ target }) => setAuthor(target.value)}/>
-      </div>
-      <div> URL: 
-        <input type="text" value={url} name="url" onChange={({ target }) => setURL(target.value)}/>
-      </div>
-      <button type="submit">Create</button>
-    </form>
-  )
-
   const renderLoginState = () => (
     <div>
       <div>
@@ -117,8 +97,11 @@ const App = () => {
         <button type="submit" onClick={handleLogout}>Log Out</button>
       </div>
       <div>
-        <h2>Create New</h2>
-        {createForm()}
+        <Togglable buttonLabel="Create">
+          <CreateForm
+            createBlog={handleCreate}
+          />
+        </Togglable>
       </div>
       <div>
         {blogs.map(blog =>
