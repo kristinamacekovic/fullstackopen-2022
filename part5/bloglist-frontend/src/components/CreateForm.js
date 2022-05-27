@@ -1,3 +1,4 @@
+// Create Form as a separate component
 import { useState } from 'react'
 
 const CreateForm = ({ createBlog }) => {
