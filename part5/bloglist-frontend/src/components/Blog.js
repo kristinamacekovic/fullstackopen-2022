@@ -1,10 +1,20 @@
 import { useState } from "react"
 
-const Blog = ({blog}) => {
+const Blog = ({blog, updateLikes}) => {
   const [detailedFlag, setDetailedFlag] = useState(false)
 
   const toggleDetail = () => {
     setDetailedFlag(!detailedFlag)
+  }
+
+  const addLike = () => {
+    updateLikes({
+      id: blog.id,
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes+1
+    })
   }
 
   const detailStyle = {
@@ -37,7 +47,7 @@ const Blog = ({blog}) => {
       <p>{blog.title}</p>
       <p>{blog.author}</p>
       <p>{blog.url}</p>
-      <p>{blog.likes} <button>like</button></p>
+      <p>{blog.likes} <button onClick={addLike}>like</button></p>
       <button onClick={toggleDetail}>Less Detail</button>
     </div>
   )

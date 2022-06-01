@@ -24,9 +24,27 @@ const createNew = async (token, title, author, url) => {
   return response.data
 }
 
+const updateExisting = async (token, id, title, author, url, likes) => {
+  const response = await axios.put(`${baseUrl}/${id}`, 
+  {
+    title,
+    author,
+    url,
+    likes
+  },
+  {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }
+  )
+  return response.data
+}
+
 const exportObject = {
   getAll,
-  createNew
+  createNew,
+  updateExisting
 }
 
 export default exportObject

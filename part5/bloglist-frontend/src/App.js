@@ -67,6 +67,19 @@ const App = () => {
       setTimeout(() => { setNotification("") }, 5000)
     }
   }
+  
+  const updateLikes = async ({id, title, author, url, likes}) => {
+    try {
+      await blogService.updateExisting(user.token, id, title, author, url, likes).then(response => {
+        blogService.getAll(user.token).then(blogs => setBlogs(blogs))
+      })
+      setNotification(`Updated ${title} by ${author} with ${likes}`)
+      setTimeout(() => { setNotification("") }, 5000)
+    } catch(exception) {
+      setNotification(exception.message)
+      setTimeout(() => { setNotification("") }, 5000)
+    }
+  }
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -105,7 +118,7 @@ const App = () => {
       </div>
       <div>
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} updateLikes={updateLikes}/>
         )}
       </div>
     </div>
