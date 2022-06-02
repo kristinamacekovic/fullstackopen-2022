@@ -23,6 +23,10 @@ const App = () => {
     }
   },[])
 
+  const compareBlogs = (a, b) => {
+    return b.likes - a.likes
+  }
+
   const handleLogin = async event => {
     event.preventDefault()
     try {
@@ -117,7 +121,7 @@ const App = () => {
         </Togglable>
       </div>
       <div>
-        {blogs.map(blog =>
+        {blogs.sort(compareBlogs).map(blog =>
           <Blog key={blog.id} blog={blog} updateLikes={updateLikes}/>
         )}
       </div>
