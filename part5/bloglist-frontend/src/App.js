@@ -85,6 +85,21 @@ const App = () => {
     }
   }
 
+  const handleDelete = async ({id}) => {
+    try {
+      if (window.confirm("Are you sure you want to delete the blog?")) {
+        await blogService.removeBlog(user.token, id).then(response => {
+          blogService.getAll(user.token).then(blogs => setBlogs(blogs))
+        })
+        setNotification(`Deleted blog`)
+        setTimeout(() => { setNotification("") }, 5000)
+      }
+    } catch(exception) {
+      setNotification(exception.message)
+      setTimeout(() => { setNotification("") }, 5000)
+    }
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div> Username
@@ -122,7 +137,7 @@ const App = () => {
       </div>
       <div>
         {blogs.sort(compareBlogs).map(blog =>
-          <Blog key={blog.id} blog={blog} updateLikes={updateLikes}/>
+          <Blog key={blog.id} blog={blog} updateLikes={updateLikes} removeBlog={handleDelete} user={user}/>
         )}
       </div>
     </div>

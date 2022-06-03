@@ -41,10 +41,22 @@ const updateExisting = async (token, id, title, author, url, likes) => {
   return response.data
 }
 
+const removeBlog = async (token, id) => {
+  const response = await axios.delete(`${baseUrl}/${id}`,
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }
+  )
+  return response.data
+}
+
 const exportObject = {
   getAll,
   createNew,
-  updateExisting
+  updateExisting,
+  removeBlog
 }
 
 export default exportObject

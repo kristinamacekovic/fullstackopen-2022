@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({blog, updateLikes}) => {
+const Blog = ({blog, updateLikes, removeBlog, user}) => {
   const [detailedFlag, setDetailedFlag] = useState(false)
 
   const toggleDetail = () => {
@@ -14,6 +14,12 @@ const Blog = ({blog, updateLikes}) => {
       author: blog.author,
       url: blog.url,
       likes: blog.likes+1
+    })
+  }
+
+  const deleteBlog = () => {
+    removeBlog({
+      id: blog.id
     })
   }
 
@@ -41,7 +47,7 @@ const Blog = ({blog, updateLikes}) => {
       </div>
     )
   }
-
+  
   return (
     <div style={detailStyle}>
       <p>{blog.title}</p>
@@ -49,6 +55,10 @@ const Blog = ({blog, updateLikes}) => {
       <p>{blog.url}</p>
       <p>{blog.likes} <button onClick={addLike}>like</button></p>
       <button onClick={toggleDetail}>Less Detail</button>
+      {
+        user.id === blog.user.id ? 
+          <button onClick={deleteBlog}>Delete</button> : null
+      }
     </div>
   )
 }
