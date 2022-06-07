@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-const Blog = ({blog, updateLikes, removeBlog, user}) => {
+const Blog = ({ blog, updateLikes, removeBlog, user }) => {
   const [detailedFlag, setDetailedFlag] = useState(false)
 
   const toggleDetail = () => {
@@ -24,15 +24,15 @@ const Blog = ({blog, updateLikes, removeBlog, user}) => {
   }
 
   const detailStyle = {
-    border: "1px solid grey",
-    backgroundColor: "#E0E1DD",
-    padding: "5px",
-    margin: "10px"
+    border: '1px solid grey',
+    backgroundColor: '#E0E1DD',
+    padding: '5px',
+    margin: '10px'
   }
 
   const shortStyle = {
-    margin: "10px",
-    fontWeight: "bold"
+    margin: '10px',
+    fontWeight: 'bold'
   }
 
   if (!detailedFlag) {
@@ -47,7 +47,7 @@ const Blog = ({blog, updateLikes, removeBlog, user}) => {
       </div>
     )
   }
-  
+
   return (
     <div style={detailStyle}>
       <p>{blog.title}</p>
@@ -56,7 +56,7 @@ const Blog = ({blog, updateLikes, removeBlog, user}) => {
       <p>{blog.likes} <button onClick={addLike}>like</button></p>
       <button onClick={toggleDetail}>Less Detail</button>
       {
-        user.id === blog.user.id ? 
+        user.id === blog.user.id ?
           <button onClick={deleteBlog}>Delete</button> : null
       }
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import CreateForm from './components/CreateForm'
@@ -11,13 +12,13 @@ const App = () => {
   const [password, setPassword] = useState([])
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState(null)
-  
+
   useEffect(() => {
-    const userInfo = localStorage.getItem("loggedUserInfo")
+    const userInfo = localStorage.getItem('loggedUserInfo')
     if (userInfo) {
       const user = JSON.parse(userInfo)
       setUser(user)
-      blogService.getAll(user.token).then(blogs => 
+      blogService.getAll(user.token).then(blogs =>
         setBlogs( blogs )
       )
     }
@@ -30,73 +31,73 @@ const App = () => {
   const handleLogin = async event => {
     event.preventDefault()
     try {
-      const user = await loginService.login({username, password})
-      window.localStorage.setItem("loggedUserInfo", JSON.stringify(user))
+      const user = await loginService.login({ username, password })
+      window.localStorage.setItem('loggedUserInfo', JSON.stringify(user))
       setUser(user)
       setNotification(`Logged in ${username}`)
-      setTimeout(() => { setNotification("") }, 5000)
-      setUsername("")
-      setPassword("")
-      blogService.getAll(user.token).then(blogs => 
+      setTimeout(() => { setNotification('') }, 5000)
+      setUsername('')
+      setPassword('')
+      blogService.getAll(user.token).then(blogs =>
         setBlogs( blogs )
       )
     } catch (exception) {
       setNotification(exception.message)
-      setTimeout(() => { setNotification("") }, 5000)
+      setTimeout(() => { setNotification('') }, 5000)
     }
   }
 
   const handleLogout = event => {
     event.preventDefault()
     try {
-      window.localStorage.removeItem("loggedUserInfo")
-      setNotification("Successfully logged out user")
-      setTimeout(() => { setNotification("") }, 5000)
+      window.localStorage.removeItem('loggedUserInfo')
+      setNotification('Successfully logged out user')
+      setTimeout(() => { setNotification('') }, 5000)
       setUser(null)
     } catch(exception) {
       setNotification(exception.message)
-      setTimeout(() => { setNotification("") }, 5000)
+      setTimeout(() => { setNotification('') }, 5000)
     }
   }
 
-  const handleCreate = async ({title, author, url}) => {
+  const handleCreate = async ({ title, author, url }) => {
     try {
       await blogService.createNew(user.token, title, author, url).then(response => {
         blogService.getAll(user.token).then(blogs => setBlogs(blogs))
       })
       setNotification(`Created ${title} by ${author}`)
-      setTimeout(() => { setNotification("") }, 5000)
+      setTimeout(() => { setNotification('') }, 5000)
     } catch(exception) {
       setNotification(exception.message)
-      setTimeout(() => { setNotification("") }, 5000)
+      setTimeout(() => { setNotification('') }, 5000)
     }
   }
-  
-  const updateLikes = async ({id, title, author, url, likes}) => {
+
+  const updateLikes = async ({ id, title, author, url, likes }) => {
     try {
       await blogService.updateExisting(user.token, id, title, author, url, likes).then(response => {
         blogService.getAll(user.token).then(blogs => setBlogs(blogs))
       })
       setNotification(`Updated ${title} by ${author} with ${likes}`)
-      setTimeout(() => { setNotification("") }, 5000)
+      setTimeout(() => { setNotification('') }, 5000)
     } catch(exception) {
       setNotification(exception.message)
-      setTimeout(() => { setNotification("") }, 5000)
+      setTimeout(() => { setNotification('') }, 5000)
     }
   }
 
-  const handleDelete = async ({id}) => {
+  const handleDelete = async ({ id }) => {
     try {
-      if (window.confirm("Are you sure you want to delete the blog?")) {
+      if (window.confirm('Are you sure you want to delete the blog?')) {
         await blogService.removeBlog(user.token, id).then(response => {
           blogService.getAll(user.token).then(blogs => setBlogs(blogs))
         })
-        setNotification(`Deleted blog`)
-        setTimeout(() => { setNotification("") }, 5000)
+        setNotification('Deleted blog')
+        setTimeout(() => { setNotification('') }, 5000)
       }
     } catch(exception) {
       setNotification(exception.message)
-      setTimeout(() => { setNotification("") }, 5000)
+      setTimeout(() => { setNotification('') }, 5000)
     }
   }
 
@@ -108,7 +109,7 @@ const App = () => {
           value={username}
           name="Username"
           onChange={({ target }) => setUsername(target.value)}
-          />
+        />
       </div>
       <div> Password
         <input
@@ -116,7 +117,7 @@ const App = () => {
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
-          />
+        />
       </div>
       <button type='submit'>Login</button>
     </form>
@@ -146,11 +147,11 @@ const App = () => {
   return (
     <div>
       <h1>Blogs</h1>
-      {notification ? 
-        <h2 style={{color: 'blue', border: '1px solid blue'}}>{notification}</h2> :
+      {notification ?
+        <h2 style={{ color: 'blue', border: '1px solid blue' }}>{notification}</h2> :
         null
       }
-      { user === null ? 
+      { user === null ?
         loginForm() :
         renderLoginState()
       }
