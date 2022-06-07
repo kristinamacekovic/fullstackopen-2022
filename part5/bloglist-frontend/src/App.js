@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import CreateForm from './components/CreateForm'
 import Togglable from './components/Togglable'
@@ -65,6 +65,7 @@ const App = () => {
       await blogService.createNew(user.token, title, author, url).then(response => {
         blogService.getAll(user.token).then(blogs => setBlogs(blogs))
       })
+      createBlogRef.current.toggleVisibility()
       setNotification(`Created ${title} by ${author}`)
       setTimeout(() => { setNotification('') }, 5000)
     } catch(exception) {
@@ -123,6 +124,7 @@ const App = () => {
     </form>
   )
 
+  const createBlogRef = useRef()
   const renderLoginState = () => (
     <div>
       <div>
@@ -130,7 +132,7 @@ const App = () => {
         <button type="submit" onClick={handleLogout}>Log Out</button>
       </div>
       <div>
-        <Togglable buttonLabel="Create">
+        <Togglable buttonLabel="Create" ref={createBlogRef}>
           <CreateForm
             createBlog={handleCreate}
           />
