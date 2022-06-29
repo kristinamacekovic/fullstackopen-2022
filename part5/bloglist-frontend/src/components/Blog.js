@@ -37,7 +37,7 @@ const Blog = ({ blog, updateLikes, removeBlog, user }) => {
 
   if (!detailedFlag) {
     return (
-      <div style={shortStyle}>
+      <div style={shortStyle} className="blogs">
         <p>
           {blog.title} - {blog.author}
         </p>
@@ -49,7 +49,7 @@ const Blog = ({ blog, updateLikes, removeBlog, user }) => {
   }
 
   return (
-    <div style={detailStyle}>
+    <div style={detailStyle} className="blogs">
       <p>{blog.title}</p>
       <p>{blog.author}</p>
       <p>{blog.url}</p>
