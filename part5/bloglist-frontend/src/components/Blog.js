@@ -53,7 +53,7 @@ const Blog = ({ blog, updateLikes, removeBlog, user }) => {
       <p>{blog.title}</p>
       <p>{blog.author}</p>
       <p>{blog.url}</p>
-      <p>{blog.likes} <button onClick={addLike}>like</button></p>
+      <p>{blog.likes} <button onClick={addLike} className="likeButton">like</button></p>
       <button onClick={toggleDetail}>Less Detail</button>
       {
         user.id === blog.user.id ?
