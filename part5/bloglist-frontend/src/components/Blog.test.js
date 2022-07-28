@@ -148,3 +148,7 @@ test('If the like button is clicked twice, the event handler the component recei
 
   expect(mockHandler).toHaveBeenCalledTimes(2)
 })
+
+test('Check that the form calls the event handler it received as props with the right details when a new blog is created', async () => {
+
+})

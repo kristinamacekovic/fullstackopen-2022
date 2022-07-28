@@ -23,7 +23,7 @@ const CreateForm = ({ createBlog }) => {
       <h2>Create New</h2>
       <form onSubmit={addBlog}>
         <div> Title:
-          <input type="text" value={title} name="title" onChange={({ target }) => setTitle(target.value)}/>
+          <input type="text" value={title} name="title" id="inputTitle" onChange={({ target }) => setTitle(target.value)}/>
         </div>
         <div>Author:
           <input type="text" value={author} name="author" onChange={({ target }) => setAuthor(target.value)}/>
